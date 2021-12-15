@@ -9,6 +9,7 @@ This repository includes the following packages, apps and utilties -
 - `storefront`: a [Next.js](https://nextjs.org) app
 - `admin`: a [Vite](https://vitejs.dev/) single page app
 - `blog`: a [Remix](https://remix.run/) blog
+- `blog-v2`: a [Astro](https://astro.build/) blog
 
 ### Available Packages
 - `logger`: isomorphic logger (a small wrapper around console.log)
