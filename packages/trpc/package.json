@@ -1,0 +1,34 @@
+{
+  "name": "trpc",
+  "version": "0.0.0",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "source": "./src/index.ts",
+  "private": true,
+  "files": [
+    "dist/**"
+  ],
+  "scripts": {
+    "test": "jest",
+    "dev": "tsc -w",
+    "build": "tsc",
+    "lint": "TIMING=1 eslint src --fix",
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
+  },
+  "devDependencies": {
+    "prisma": "^3.6.0",
+    "scripts": "*",
+    "tsconfig": "*",
+    "typescript": "^4.2.4"
+  },
+  "jest": {
+    "preset": "scripts/jest/node"
+  },
+  "dependencies": {
+    "@prisma/client": "^3.6.0",
+    "@trpc/react": "^9.16.0",
+    "@trpc/server": "^9.16.0",
+    "superjson": "^1.8.0",
+    "zod": "^3.11.6"
+  }
+}
