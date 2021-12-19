@@ -12,7 +12,16 @@
     "lint": "turbo run lint",
     "test": "turbo run test",
     "clean": "turbo run clean && rm -rf node_modules",
-    "graph": "turbo run build test --graph"
+    "graph": "turbo run build test --graph",
+    "build:ci": "npm run migrate:deploy && npm run generate && npm run build",
+    "generate": "npm run generate:prisma",
+    "generate:prisma": "prisma generate",
+    "db:seed": "prisma db seed --preview-feature",
+    "db:push": "prisma db push --preview-feature",
+    "migrate:dev": "prisma migrate dev",
+    "migrate:deploy": "prisma migrate deploy",
+    "migrate:reset": "prisma migrate reset",
+    "postinstall": "npm run generate"
   },
   "devDependencies": {
     "turbo": "latest"
