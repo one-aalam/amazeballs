@@ -10,17 +10,24 @@
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf .next"
   },
   "dependencies": {
+    "@trpc/client": "^9.16.0",
+    "@trpc/next": "^9.16.0",
+    "@trpc/react": "^9.16.0",
+    "@trpc/server": "^9.16.0",
     "logger": "*",
     "next": "^11.0.1",
     "next-transpile-modules": "^8.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-query": "^3.34.5",
+    "superjson": "^1.8.0",
+    "trpc": "*",
     "ui": "*"
   },
   "devDependencies": {
-    "eslint-config-next": "^11.0.1",
     "@types/react": "^17.0.13",
     "@types/react-dom": "^17.0.8",
+    "eslint-config-next": "^11.0.1",
     "scripts": "*",
     "tsconfig": "*",
     "typescript": "^4.2.4"

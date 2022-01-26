@@ -1,46 +1,50 @@
 import type { MetaFunction, LoaderFunction } from "remix";
 import { useLoaderData, json, Link } from "remix";
-import { CounterButton } from "ui";
+
+import StarterKit from "~/components/StarterKit"
+import SiteLayout from '../components/SiteLayout'
+import Button from '../components/Button'
+
+import { prisma } from '../lib/prisma'
 
 type IndexData = {
   resources: Array<{ name: string; url: string }>;
-  demos: Array<{ name: string; to: string }>;
+  topPages: Array<{ name: string; to: string, isPrimary?: boolean }>;
 };
 
 // Loaders provide data to components and are only ever called on the server, so
 // you can connect to a database or run any server side code you want right next
 // to the component that renders it.
 // https://remix.run/api/conventions#loader
-export let loader: LoaderFunction = () => {
+export let loader: LoaderFunction = async () => {
+    const products = await prisma.product.findMany()
+    console.log(products)
   let data: IndexData = {
     resources: [
       {
         name: "Remix Docs",
-        url: "https://remix.run/docs",
+        url: "https://remix.run/docs"
       },
       {
         name: "React Router Docs",
-        url: "https://reactrouter.com/docs",
+        url: "https://reactrouter.com/docs"
       },
       {
         name: "Remix Discord",
-        url: "https://discord.gg/VBePs6d",
-      },
+        url: "https://discord.gg/VBePs6d"
+      }
     ],
-    demos: [
+    topPages: [
+    //   {
+    //     to: "/gallery",
+    //     name: "Browse Components (Coming soon)"
+    //   },
       {
-        to: "demos/actions",
-        name: "Actions",
+        to: "/auth",
+        name: "See Supabase in action",
+        isPrimary: true
       },
-      {
-        to: "demos/about",
-        name: "Nested Routes, CSS loading/unloading",
-      },
-      {
-        to: "demos/params",
-        name: "URL Params and Error Boundaries",
-      },
-    ],
+    ]
   };
 
   // https://remix.run/api/remix#json
@@ -50,8 +54,8 @@ export let loader: LoaderFunction = () => {
 // https://remix.run/api/conventions#meta
 export let meta: MetaFunction = () => {
   return {
-    title: "Remix Starter",
-    description: "Welcome to remix!",
+    title: "Remix Starter Kit",
+    description: "Welcome to Remix Starter Kit"
   };
 };
 
@@ -60,43 +64,33 @@ export default function Index() {
   let data = useLoaderData<IndexData>();
 
   return (
-    <div className="remix__page">
+      <SiteLayout>
+    <div className="min-h-screen flex flex-col justify-center">
       <main>
-        <h2>Welcome to Remix!</h2>
-        <p>We're stoked that you're here. 🥳</p>
-        <p>
-          Feel free to take a look around the code to see how Remix does things,
-          it might be a bit different than what you’re used to. When you're
-          ready to dive deeper, we've got plenty of resources to get you
-          up-and-running quickly.
-        </p>
-        <p>
-          Check out all the demos in this starter, and then just delete the{" "}
-          <code>app/routes/demos</code> and <code>app/styles/demos</code>{" "}
-          folders when you're ready to turn this into your next project.
-        </p>
+        <StarterKit/>
+        <p className="text-center">Remix and Supabase for server rendered web applications, pretty good setup for eslint, prettier, git hooks, etc. and friction-less and robust UI development with TailwindCSS, DaisyUI and Headless UI</p>
       </main>
-      <aside>
-        <h2>Demos In This App</h2>
-        <ul>
-          {data.demos.map((demo) => (
-            <li key={demo.to} className="remix__page__resource">
-              <Link to={demo.to} prefetch="intent">
-                {demo.name}
-              </Link>
+
+
+      <aside className="text-center mt-4">
+        <ul className="flex flex-row justify-center gap-2">
+          {data.topPages.map(page => (
+            <li key={page.to} className="remix__page__resource">
+                <Link className={`btn btn-primary ${!page.isPrimary && 'btn-outline'}`} to={page.to} prefetch="intent">{page.name} &rarr;</Link>
             </li>
           ))}
         </ul>
-        <h2>Resources</h2>
-        <ul>
-          {data.resources.map((resource) => (
-            <li key={resource.url} className="remix__page__resource">
+        <br/>
+        <h2 className="text-purple-400">Remix Resources</h2>
+        <ul className="flex flex-row justify-center gap-2">
+          {data.resources.map(resource => (
+            <li key={resource.url} className="remix__page__resource text-gray-600">
               <a href={resource.url}>{resource.name}</a>
             </li>
           ))}
         </ul>
       </aside>
-      <CounterButton />
     </div>
+    </SiteLayout>
   );
 }
